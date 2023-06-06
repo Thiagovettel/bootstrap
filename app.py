@@ -42,6 +42,21 @@ def login():
     
      cursor = mydb.cursor()
 
+     nome = form_novo_usuario.nome.data
+     celular = form_novo_usuario.celular.data
+     email = form_novo_usuario.email.data
+     cpf = form_novo_usuario.email.data
+     senha = form_novo_usuario.senha.data
+     hashsenha = sha256(senha.encode())
+
+     query = f'INSERT INTO aluno (nome,email,celular,cpf,senha) VALUES ("{nome})","{email}","{celular}","{cpf}","{hashsenha.hexdigest()}")'
+     print(query)
+     cursor.execute(query)
+     mydb.commit()
+
+     flash(f'Cadastro realizado com sucesso:{form_novo_usuario.nome.data}','alert-sucess')
+     return redirect(url_for('index'))
+
     
     return render_template('login.html',titulo=titulo,descricao=descricao,form_login=form_login,form_novo_usuario=form_novo_usuario)
 
